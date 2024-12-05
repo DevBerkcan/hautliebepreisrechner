@@ -1,101 +1,414 @@
-import Image from "next/image";
+"use client";
+import React, { useState } from "react";
+import Navbar from "./components/Navbar";
 
-export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+type Pricing = {
+  [key: string]: number;
+};
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+type Treatment = {
+  name: string;
+  pricing: Pricing;
+};
+
+type Category = {
+  [treatmentName: string]: Treatment[]; // Maps treatment categories (e.g., "Kopf | Einzelbehandlung") to a list of treatments
+};
+
+type Service = {
+  [categoryName: string]: Category; // Maps service types (e.g., "Haarentfernung") to treatment categories
+};
+
+type GenderPricingData = {
+  [gender: string]: Service; // Maps genders (e.g., "Frau" or "Mann") to services
+};
+
+type Gender = "Frau" | "Mann";
+
+const pricingData: GenderPricingData = {
+  Frau: {
+    Haarentfernung: {
+      Kopf: [
+        {
+          name: "Gesicht",
+          pricing: {
+            "ab 5 Areale": 39,
+            "ab 3 Areale": 49,
+            "Einzelpreis pro Behandlung": 59,
+          },
+        },
+        {
+          name: "Oberlippe",
+          pricing: {
+            "ab 5 Areale": 19,
+            "ab 3 Areale": 24,
+            "Einzelpreis pro Behandlung": 29,
+          },
+        },
+        {
+          name: "Kinn",
+          pricing: {
+            "ab 5 Areale": 19,
+            "ab 3 Areale": 24,
+            "Einzelpreis pro Behandlung": 29,
+          },
+        },
+      ],
+      Oberkorper: [
+        {
+          name: "Oberarme",
+          pricing: {
+            "ab 5 Areale": 30,
+            "ab 3 Areale": 49,
+          },
+        },
+        {
+          name: "Unterarme",
+          pricing: {
+            "ab 5 Areale": 90,
+            "ab 3 Areale": 59,
+          },
+        },
+      ],
+    },
+    Plasmabehandlung: {
+      "Kopf | Einzelbehandlung": [
+        {
+          name: "Halsfältchen (pro Falte)",
+          pricing: {
+            "ab 5 Areale": 60,
+            "ab 3 Areale": 80,
+            "Einzelpreis pro Behandlung": 100,
+          },
+        },
+        {
+          name: "Kinnfalte",
+          pricing: {
+            "ab 5 Areale": 90,
+            "ab 3 Areale": 110,
+            "Einzelpreis pro Behandlung": 130,
+          },
+        },
+        {
+          name: "Krähenfüße",
+          pricing: {
+            "ab 5 Areale": 110,
+            "ab 3 Areale": 130,
+            "Einzelpreis pro Behandlung": 150,
+          },
+        },
+      ],
+      "Kopf | 3er Paket": [
+        {
+          name: "Halsfältchen (pro Falte)",
+          pricing: {
+            "ab 5 Areale": 0,
+            "ab 3 Areale": 0,
+            "Einzelpreis pro Behandlung": 249,
+          },
+        },
+        {
+          name: "Kinnfalte",
+          pricing: {
+            "ab 5 Areale": 0,
+            "ab 3 Areale": 0,
+            "Einzelpreis pro Behandlung": 339,
+          },
+        },
+        {
+          name: "Krähenfüße",
+          pricing: {
+            "ab 5 Areale": 0,
+            "ab 3 Areale": 0,
+            "Einzelpreis pro Behandlung": 399,
+          },
+        },
+      ],
+    },
+  },
+  Mann: {
+    Haarentfernung: {
+      "Kopf | Einzelbehandlung": [
+        {
+          name: "Halsfalten",
+          pricing: {
+            "ab 5 Areale": 50,
+            "ab 3 Areale": 49,
+            "Einzelpreis pro Behandlung": 10,
+          },
+        },
+        {
+          name: "Kinnfalte",
+          pricing: {
+            "ab 5 Areale": 90,
+            "ab 3 Areale": 59,
+            "Einzelpreis pro Behandlung": 10,
+          },
+        },
+      ],
+      Oberkorper: [
+        {
+          name: "Oberarme",
+          pricing: {
+            "ab 5 Areale": 60,
+            "ab 3 Areale": 49,
+          },
+        },
+        {
+          name: "Unterarme",
+          pricing: {
+            "ab 5 Areale": 90,
+            "ab 3 Areale": 59,
+          },
+        },
+      ],
+    },
+    Plasmabehandlung: {
+      "Kopf | Einzelbehandlung": [
+        {
+          name: "Halsfalten",
+          pricing: {
+            "ab 5 Areale": 60,
+          },
+        },
+        {
+          name: "Kinnfalte",
+          pricing: {
+            "ab 5 Areale": 90,
+          },
+        },
+      ],
+    },
+  },
+};
+
+const Home = () => {
+  const [gender, setGender] = useState<Gender>("Frau");
+  const [selectedTreatment, setSelectedTreatment] =
+    useState<string>("Haarentfernung");
+  const [selectedItems, setSelectedItems] = useState<
+    {
+      gender: Gender;
+      area: string;
+      treatmentName: string;
+      price: number;
+    }[]
+  >([]);
+
+  const getPricingHeaders = (treatmentData: Category): string[] => {
+    const headers = new Set<string>();
+
+    Object.keys(treatmentData).forEach((area) => {
+      treatmentData[area].forEach((treatment) => {
+        Object.keys(treatment.pricing).forEach((header) => {
+          headers.add(header);
+        });
+      });
+    });
+
+    return Array.from(headers);
+  };
+
+  // Render Pricing Rows
+  const renderPricing = (treatmentData: Category, pricingHeaders: string[]) => {
+    return Object.keys(treatmentData).map((area) => (
+      <div
+        className="flex items-center align-middle justify-center w-[94vw] gap-4 py-5 p-10"
+        key={area}
+      >
+        {/* Left Side - Area Names */}
+        <div className="flex-1 w-5/12">
+          <h4 className="font-semibold text-lg ml-2 mb-2">{area}</h4>
+          {treatmentData[area].map((treatment: any) => (
+            <div key={treatment.name} className="flex items-center gap-4 ml-5">
+              <label className="flex">
+                <input
+                  type="checkbox"
+                  checked={selectedItems.some(
+                    (item) =>
+                      item.gender === gender &&
+                      item.area === area &&
+                      item.treatmentName === treatment.name
+                  )}
+                  onChange={() => addItemToCart(treatment, area)}
+                />
+                <p className="flex ml-2">{treatment.name}</p>
+              </label>
+              {/* <p>{treatment.name}</p> */}
+            </div>
+          ))}
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+
+        {/* Right Side - Pricing Columns */}
+        <div className="flex w-7/12 gap-4 justify-end">
+          {pricingHeaders.map((header) => (
+            <div className="flex flex-col items-center w-1/3" key={header}>
+              <div className="font-semibold opacity-0 mb-2">.</div>
+              {treatmentData[area].map((treatment) => (
+                <div
+                  className="text-center"
+                  key={`${treatment.name}-${header}`}
+                >
+                  {treatment.pricing[header] ? (
+                    <p>${treatment.pricing[header]}</p>
+                  ) : (
+                    <p>-</p> // Placeholder for missing pricing
+                  )}
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
+      </div>
+    ));
+  };
+
+  // Function to add or remove selected treatment from the cart
+  const addItemToCart = (treatment: Treatment, area: string) => {
+    const selectedItem = {
+      gender,
+      area,
+      treatmentName: treatment.name,
+      price: treatment.pricing["Einzelpreis pro Behandlung"],
+    };
+
+    setSelectedItems((prevItems) => {
+      // Check if the item already exists in the selectedItems
+      const exists = prevItems.some(
+        (item) =>
+          item.gender === selectedItem.gender &&
+          item.area === selectedItem.area &&
+          item.treatmentName === selectedItem.treatmentName
+      );
+
+      if (exists) {
+        // If it exists, remove it from the cart
+        return prevItems.filter(
+          (item) =>
+            !(
+              item.gender === selectedItem.gender &&
+              item.area === selectedItem.area &&
+              item.treatmentName === selectedItem.treatmentName
+            )
+        );
+      } else {
+        // If it doesn't exist, add it to the cart
+        return [...prevItems, selectedItem];
+      }
+    });
+  };
+
+  const calculateTotal = () => {
+    const subtotal = selectedItems.reduce(
+      (total, item) => total + item.price,
+      0
+    );
+    const discount = 0.1 * subtotal; // 10% discount
+    const tax = 0.2 * subtotal; // 20% tax
+    const total = subtotal - discount + tax;
+    return { subtotal, discount, tax, total };
+  };
+
+  const { subtotal, discount, tax, total } = calculateTotal();
+
+  // Selected Treatment Data
+  const selectedData = pricingData[gender]; // Filter by gender
+  const selectedTreatmentData = selectedData[selectedTreatment]; // Filter by treatment
+
+  // Determine pricing headers for selected treatment
+  const pricingHeaders = getPricingHeaders(selectedTreatmentData);
+
+  return (
+    <div className="w-full bg-gray-900 text-white">
+      <Navbar />
+      <div className="flex gap-4 mb-4">
+        {["Frau", "Mann"].map((g) => (
+          <button
+            key={g}
+            onClick={() => setGender(g as Gender)}
+            className={`px-6 py-2 rounded-md font-medium ${
+              gender === g
+                ? "bg-[#007A89] text-white"
+                : "bg-gray-200 text-[#007A89]"
+            } hover:shadow-md`}
+          >
+            {g}
+          </button>
+        ))}
+      </div>
+
+      <div className="flex flex-col justify-center align-middle items-center ">
+        <div className="flex gap-4 mb-6">
+          {Object.keys(pricingData[gender]).map((treatmentType) => (
+            <button
+              key={treatmentType}
+              onClick={() => setSelectedTreatment(treatmentType)}
+              className="px-4 py-2 bg-blue-500 text-white rounded-md"
+            >
+              {treatmentType}
+            </button>
+          ))}
+        </div>
+
+        {/* Pricing Table */}
+        <div className="flex flex-col items-center align-middle justify-center w-[94vw] gap-4 py-5 p-10 bg-gray-800 rounded-lg shadow-[2px_4px_3px_rgba(150,150,150,0.5)]">
+          {/* Pricing Headers */}
+          <div className="flex flex-row gap-4 w-full items-center justify-between">
+            <div className="flex-1 w-5/12 opacity-0">.</div>
+            <div className="flex w-7/12 gap-4 h-full justify-end">
+              {pricingHeaders.map((header) => (
+                <h5
+                  className="overflow-clip font-semibold font-600 text-center w-1/3 bg-green-800 rounded-b rounded-t-3xl py-4"
+                  key={header}
+                >
+                  {header}
+                </h5>
+              ))}
+            </div>
+          </div>
+
+          {/* Pricing Rows */}
+          <div className="flex flex-col items-center w-[100vw]">
+            {renderPricing(selectedTreatmentData, pricingHeaders)}
+          </div>
+        </div>
+      </div>
+
+      {/* Payment Section */}
+      <div className="mt-6 p-4 border-t-2">
+        <h3 className="font-semibold text-lg">Your Order Summary</h3>
+        <div className="mt-4">
+          {selectedItems.map((item, index) => (
+            <div key={index} className="flex justify-between">
+              <p>
+                {item.treatmentName} ({item.area})
+              </p>
+              <p>${item.price}</p>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-4">
+          <div className="flex justify-between">
+            <p>Subtotal:</p>
+            <p>${subtotal.toFixed(2)}</p>
+          </div>
+          <div className="flex justify-between">
+            <p>Discount:</p>
+            <p>-${discount.toFixed(2)}</p>
+          </div>
+          <div className="flex justify-between">
+            <p>Tax:</p>
+            <p>${tax.toFixed(2)}</p>
+          </div>
+          <div className="flex justify-between font-bold">
+            <p>Total:</p>
+            <p>${total.toFixed(2)}</p>
+          </div>
+        </div>
+      </div>
     </div>
   );
-}
+};
+
+export default Home;
