@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import Navbar from "./components/Navbar";
+import poppins from "./fonts/fonts";
 
 type Pricing = {
   [key: string]: number;
@@ -60,6 +61,7 @@ const pricingData: GenderPricingData = {
           pricing: {
             "ab 5 Areale": 30,
             "ab 3 Areale": 49,
+            "Einzelpreis pro Behandlung": 69,
           },
         },
         {
@@ -67,6 +69,7 @@ const pricingData: GenderPricingData = {
           pricing: {
             "ab 5 Areale": 90,
             "ab 3 Areale": 59,
+            "Einzelpreis pro Behandlung": 79,
           },
         },
       ],
@@ -192,6 +195,7 @@ const Home = () => {
       area: string;
       treatmentName: string;
       price: number;
+      selectedTreatment: string;
     }[]
   >([]);
 
@@ -219,7 +223,7 @@ const Home = () => {
         {/* Left Side - Area Names */}
         <div className="flex-1 w-5/12">
           <h4 className="font-semibold text-lg ml-2 mb-2">{area}</h4>
-          {treatmentData[area].map((treatment: any) => (
+          {treatmentData[area].map((treatment: Treatment) => (
             <div key={treatment.name} className="flex items-center gap-4 ml-5">
               <label className="flex">
                 <input
@@ -228,7 +232,8 @@ const Home = () => {
                     (item) =>
                       item.gender === gender &&
                       item.area === area &&
-                      item.treatmentName === treatment.name
+                      item.treatmentName === treatment.name &&
+                      item.selectedTreatment === selectedTreatment
                   )}
                   onChange={() => addItemToCart(treatment, area)}
                 />
@@ -270,6 +275,7 @@ const Home = () => {
       area,
       treatmentName: treatment.name,
       price: treatment.pricing["Einzelpreis pro Behandlung"],
+      selectedTreatment: selectedTreatment,
     };
 
     setSelectedItems((prevItems) => {
@@ -278,7 +284,8 @@ const Home = () => {
         (item) =>
           item.gender === selectedItem.gender &&
           item.area === selectedItem.area &&
-          item.treatmentName === selectedItem.treatmentName
+          item.treatmentName === selectedItem.treatmentName &&
+          item.selectedTreatment === selectedItem.selectedTreatment
       );
 
       if (exists) {
@@ -288,7 +295,8 @@ const Home = () => {
             !(
               item.gender === selectedItem.gender &&
               item.area === selectedItem.area &&
-              item.treatmentName === selectedItem.treatmentName
+              item.treatmentName === selectedItem.treatmentName &&
+              item.selectedTreatment === selectedItem.selectedTreatment
             )
         );
       } else {
@@ -319,7 +327,7 @@ const Home = () => {
   const pricingHeaders = getPricingHeaders(selectedTreatmentData);
 
   return (
-    <div className="w-full bg-gray-900 text-white">
+    <div className="w-full bg-gray-50 text-white overflow-hidden">
       <Navbar />
       <div className="flex gap-4 mb-4">
         {["Frau", "Mann"].map((g) => (
@@ -336,14 +344,17 @@ const Home = () => {
           </button>
         ))}
       </div>
-
       <div className="flex flex-col justify-center align-middle items-center ">
         <div className="flex gap-4 mb-6">
           {Object.keys(pricingData[gender]).map((treatmentType) => (
             <button
               key={treatmentType}
               onClick={() => setSelectedTreatment(treatmentType)}
-              className="px-4 py-2 bg-blue-500 text-white rounded-md"
+              className={`px-4 py-2 border border-solid border-gray-300 bg-blue-500 shadow-md hover:shadow-lg transition-shadow text-white ${
+                selectedTreatment === treatmentType
+                  ? "bg-main-color"
+                  : "bg-gray-50 text-main-color"
+              } rounded-md`}
             >
               {treatmentType}
             </button>
@@ -358,7 +369,7 @@ const Home = () => {
             <div className="flex w-7/12 gap-4 h-full justify-end">
               {pricingHeaders.map((header) => (
                 <h5
-                  className="overflow-clip font-semibold font-600 text-center w-1/3 bg-green-800 rounded-b rounded-t-3xl py-4"
+                  className={`overflow-clip font-semibold font-600 text-center w-1/3 bg-green-800 rounded-b rounded-t-3xl py-4 ${poppins.className}`}
                   key={header}
                 >
                   {header}
@@ -375,14 +386,12 @@ const Home = () => {
       </div>
 
       {/* Payment Section */}
-      <div className="mt-6 p-4 border-t-2">
+      <div className="mt-6 p-4 border-t-2 bg-slate-600">
         <h3 className="font-semibold text-lg">Your Order Summary</h3>
         <div className="mt-4">
           {selectedItems.map((item, index) => (
-            <div key={index} className="flex justify-between">
-              <p>
-                {item.treatmentName} ({item.area})
-              </p>
+            <div key={index} className="flex justify-between items-center">
+              <p>{`${item.gender}-${item.selectedTreatment} - ${item.treatmentName} (${item.area}) `}</p>
               <p>${item.price}</p>
             </div>
           ))}
