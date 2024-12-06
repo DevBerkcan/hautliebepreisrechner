@@ -1,7 +1,9 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "./components/Navbar";
 import poppins from "./fonts/fonts";
+import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 type Pricing = {
   [key: string]: number;
@@ -199,6 +201,24 @@ const Home = () => {
     }[]
   >([]);
 
+  const { data: session, status } = useSession(); // for checking user session
+  const router = useRouter();
+
+  useEffect(() => {
+    if (status === "loading") return;
+    if (!session) {
+      router.push("/api/auth/signin");
+    }
+  }, [session, status, router]);
+
+  if (status === "loading") {
+    return <div>Loading...</div>;
+  }
+
+  if (!session) {
+    return null;
+  }
+
   const getPricingHeaders = (treatmentData: Category): string[] => {
     const headers = new Set<string>();
 
@@ -350,9 +370,9 @@ const Home = () => {
             <button
               key={treatmentType}
               onClick={() => setSelectedTreatment(treatmentType)}
-              className={`px-4 py-2 border border-solid border-gray-300 bg-blue-500 shadow-md hover:shadow-lg transition-shadow text-white ${
+              className={`px-4 py-2 border border-solid border-gray-300 bg-blue-500 shadow-md hover:shadow-lg transition-shadow ${
                 selectedTreatment === treatmentType
-                  ? "bg-main-color"
+                  ? "bg-main-color text-white"
                   : "bg-gray-50 text-main-color"
               } rounded-md`}
             >
