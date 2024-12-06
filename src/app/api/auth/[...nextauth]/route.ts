@@ -14,7 +14,7 @@ const authOptions: AuthOptions = {
         username: { label: "Username", type: "text", placeholder: "jsmith" },
         password: { label: "Password", type: "password" },
       },
-      async authorize(credentials, req) {
+      async authorize(credentials) {
         if (credentials?.username && credentials.password) {
           try {
             const user = await prisma.admin.findFirst({
