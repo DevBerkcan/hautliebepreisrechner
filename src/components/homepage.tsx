@@ -45,6 +45,8 @@ const Home = () => {
   //   router.push("/success");
   // };
 
+
+
   // Render Pricing Rows
   const renderPricing = (treatmentData: Category, pricingHeaders: string[]) => {
     return Object.keys(treatmentData).map((area) => (
@@ -81,7 +83,7 @@ const Home = () => {
           {pricingHeaders.map((header) => (
             <div className="flex flex-col items-center w-1/3" key={header}>
               <div className="font-semibold opacity-0 mb-2">.</div>
-              {treatmentData[area].map((treatment) => (
+              {treatmentData[area]?.map((treatment: Treatment) => (
                 <div
                   className="text-center"
                   key={`${treatment.name}-${header}`}
@@ -102,17 +104,29 @@ const Home = () => {
 
   // Function to add or remove selected treatment from the cart
   const addItemToCart = (treatment: Treatment, area: string) => {
-    const selectedItem = {
-      gender,
-      area,
-      treatmentName: treatment.name,
-      price:
-        treatment.pricing["Einzelpreis pro Behandlung"] ||
-        treatment.pricing["Kurspreis"],
-      selectedTreatment: selectedTreatment,
+
+    const calculatePrice = (treatment: Treatment, itemCount: number): number => {
+      if (itemCount >= 5) {
+        return (
+          treatment.pricing["ab 5 Areale"] ||
+          treatment.pricing["Einzelpreis pro Behandlung"]
+        );
+      } else if (itemCount >= 3) {
+        return treatment.pricing["ab 3 Areale"];
+      } else {
+        return treatment.pricing["Einzelpreis pro Behandlung"];
+      }
     };
 
     setSelectedItems((prevItems) => {
+      const selectedItem = {
+        gender,
+        area,
+        treatmentName: treatment.name,
+        price: 0,
+        selectedTreatment: selectedTreatment,
+      };
+
       // Check if the item already exists in the selectedItems
       const exists = prevItems.some(
         (item) =>
@@ -122,6 +136,7 @@ const Home = () => {
           item.selectedTreatment === selectedItem.selectedTreatment
       );
 
+      let updatedItems;
       if (exists) {
         // If it exists, remove it from the cart
         return prevItems.filter(
@@ -134,9 +149,28 @@ const Home = () => {
             )
         );
       } else {
-        // If it doesn't exist, add it to the cart
-        return [...prevItems, selectedItem];
+        // Add the item
+        updatedItems = [...prevItems, selectedItem];
       }
+
+      // Update the price for all items based on the new count
+      const updatedItemCount = updatedItems.length;
+      updatedItems = updatedItems.map((item) => {
+        const treatmentList = pricingData[item.gender]?.[item.selectedTreatment] || [];
+
+        const matchingTreatment = treatmentList.find(
+          (t: Treatment) => t.name === item.treatmentName
+        );
+
+        return {
+          ...item,
+          price: matchingTreatment
+            ? calculatePrice(matchingTreatment, updatedItemCount)
+            : 0, // Default to 0 if no matching treatment is found
+        };
+      });
+
+      return updatedItems;
     });
   };
 
@@ -154,6 +188,12 @@ const Home = () => {
 
   const { subtotal, tax, total } = calculateTotal();
 
+
+  //button redirect for credi4beauty
+  const handleRedirect = () => {
+    window.location.href = "https://credit4beauty.de/";
+  };
+
   // Selected Treatment Data
   const selectedData = pricingData[gender]; // Filter by gender
   const selectedTreatmentData = selectedData[selectedTreatment]; // Filter by treatment
@@ -170,11 +210,10 @@ const Home = () => {
             <button
               key={g}
               onClick={() => setGender(g as Gender)}
-              className={`px-6 py-2 rounded-md font-medium ${
-                gender === g
-                  ? "bg-[#007A89] text-white"
-                  : "bg-gray-200 text-[#007A89]"
-              } hover:shadow-md`}
+              className={`px-6 py-2 rounded-md font-medium ${gender === g
+                ? "bg-[#007A89] text-white"
+                : "bg-gray-200 text-[#007A89]"
+                } hover:shadow-md`}
             >
               {g}
             </button>
@@ -196,11 +235,10 @@ const Home = () => {
             <button
               key={treatmentType}
               onClick={() => setSelectedTreatment(treatmentType)}
-              className={`px-4 py-2 border border-solid border-gray-300 bg-blue-500 shadow-md hover:shadow-lg transition-shadow ${
-                selectedTreatment === treatmentType
-                  ? "bg-main-color text-white"
-                  : "bg-gray-50 text-main-color"
-              } rounded-md`}
+              className={`px-4 py-2 border border-solid border-gray-300 bg-blue-500 shadow-md hover:shadow-lg transition-shadow ${selectedTreatment === treatmentType
+                ? "bg-main-color text-white"
+                : "bg-gray-50 text-main-color"
+                } rounded-md`}
             >
               {treatmentType}
             </button>
@@ -293,6 +331,14 @@ const Home = () => {
                 handleSuccess(details);
               }}
             /> */}
+          </div>
+          <div>
+            <button
+              onClick={handleRedirect}
+              className="px-4 py-2 rounded-md bg-blue-500 text-white font-semibold hover:bg-blue-600 transition-all"
+            >
+            credi4beauty 
+            </button>
           </div>
         </div>
       </div>
