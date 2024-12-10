@@ -361,7 +361,7 @@ const Home = () => {
             <div className="flex w-7/12 gap-4 h-full justify-end">
               {pricingHeaders.map((header) => (
                 <h5
-                  className={`overflow-clip font-semibold font-600 text-center w-1/3 bg-green-800 rounded-b rounded-t-3xl py-4 ${poppins.className}`}
+                  className={`overflow-clip font-semibold font-600 text-center w-1/3 bg-[#E0D7C5] px-2 text-main-color rounded-b rounded-t-3xl py-4 ${poppins.className}`}
                   key={header}
                 >
                   {header}
@@ -378,7 +378,7 @@ const Home = () => {
       </div>
 
       {/* Payment Section */}
-      <div className="mt-6 px-2 md:p-4 border-t-2 bg-slate-600 h-[30vh] overflow-y-scroll">
+      <div className="mt-6 px-2 md:p-4 border-t-2 bg-[#E0D7C5] text-slate-600 h-[30vh] overflow-y-scroll">
         <h3 className="font-semibold text-lg">Your Order Summary</h3>
         <div className="mt-4">
           {selectedItems.map((item, index) => (
