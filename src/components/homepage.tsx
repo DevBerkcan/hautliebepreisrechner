@@ -4,23 +4,24 @@ import Navbar from "./Navbar";
 import poppins from "@/app/fonts/fonts";
 // import { useRouter } from "next/navigation";
 // import PayPalButton from "./PayPalButton";
-import { Category, Gender, Treatment } from "@/app/types/types";
+import {
+  Category,
+  Gender,
+  PRICING_TYPE,
+  SELECTED_TYPE,
+  Treatment,
+} from "@/app/types/types";
 import { pricingData } from "@/app/data";
+import Link from "next/link";
 
 const Home = () => {
   const [gender, setGender] = useState<Gender>("Frau");
   const [selectedTreatment, setSelectedTreatment] =
     useState<string>("Haarentfernung");
+  const [selectedPricingType, setSelectedPricingType] =
+    useState<PRICING_TYPE>("Area1");
   const [discountPercent, setDiscountPercent] = useState<number>(0);
-  const [selectedItems, setSelectedItems] = useState<
-    {
-      gender: Gender;
-      area: string;
-      treatmentName: string;
-      price: number;
-      selectedTreatment: string;
-    }[]
-  >([]);
+  const [selectedItems, setSelectedItems] = useState<SELECTED_TYPE[]>([]);
 
   // const router = useRouter();
 
@@ -46,6 +47,109 @@ const Home = () => {
   // };
 
   // Render Pricing Rows
+
+  const updatePricing = (selectedItems: any[], selectedPricingType: string) => {
+    return selectedItems.map((item) => {
+      const pricingValueString =
+        selectedPricingType === "Area5"
+          ? "ab 5 Areale"
+          : selectedPricingType === "Area3"
+          ? "ab 3 Areale"
+          : "Einzelpreis pro Behandlung";
+
+      return {
+        ...item,
+        price:
+          item.treatment.pricing[pricingValueString] ||
+          item.treatment.pricing["Einzelpreis pro Behandlung"] ||
+          item.treatment.pricing["Kurspreis"],
+      };
+    });
+  };
+
+  const addItemToCart = (treatment: Treatment, area: string) => {
+    const selectedItemLength = selectedItems.length;
+
+    // Check if the item already exists
+    const exists = selectedItems.find((item) => {
+      return (
+        item.area === area &&
+        item.selectedTreatment === selectedTreatment &&
+        item.treatment.name === treatment.name &&
+        (selectedTreatment !== "courses" ? item.gender === gender : true)
+      );
+    });
+
+    // If the item exists, remove it
+    if (exists) {
+      setSelectedItems((prev) => {
+        const updatedItems = prev.filter(
+          (item) =>
+            !(
+              item.area === exists.area &&
+              item.gender === exists.gender &&
+              item.selectedTreatment === exists.selectedTreatment &&
+              item.treatment.name === exists.treatment.name
+            )
+        );
+
+        const newCondition =
+          updatedItems.length >= 5
+            ? "Area5"
+            : updatedItems.length >= 3
+            ? "Area3"
+            : "Area1";
+
+        if (newCondition !== selectedPricingType) {
+          const updatedItemsWithPricing = updatePricing(
+            updatedItems,
+            newCondition
+          );
+          return updatedItemsWithPricing;
+        }
+        return updatedItems;
+      });
+      return;
+    }
+
+    // Define new item to be added
+    const newItem = {
+      gender,
+      area,
+      treatment,
+      selectedTreatment,
+      price:
+        treatment.pricing[
+          selectedPricingType === "Area5"
+            ? "ab 5 Areale"
+            : selectedPricingType === "Area3"
+            ? "ab 3 Areale"
+            : "Einzelpreis pro Behandlung"
+        ] || treatment.pricing["Kurspreis"],
+    };
+
+    // Add new item based on current selected item count
+    let newPricingType: string;
+    if (selectedItemLength + 1 >= 5) {
+      newPricingType = "Area5";
+    } else if (selectedItemLength + 1 >= 3) {
+      newPricingType = "Area3";
+    } else {
+      newPricingType = "Area1";
+    }
+
+    setSelectedItems((prev) => {
+      const updatedItems = [...prev, newItem];
+      setSelectedPricingType(newPricingType as PRICING_TYPE);
+
+      const updatedItemsWithPricing = updatePricing(
+        updatedItems,
+        newPricingType
+      );
+      return updatedItemsWithPricing;
+    });
+  };
+
   const renderPricing = (treatmentData: Category, pricingHeaders: string[]) => {
     return Object.keys(treatmentData).map((area) => (
       <div
@@ -64,7 +168,7 @@ const Home = () => {
                     (item) =>
                       item.gender === gender &&
                       item.area === area &&
-                      item.treatmentName === treatment.name &&
+                      item.treatment.name === treatment.name &&
                       item.selectedTreatment === selectedTreatment
                   )}
                   onChange={() => addItemToCart(treatment, area)}
@@ -81,7 +185,7 @@ const Home = () => {
           {pricingHeaders.map((header) => (
             <div className="flex flex-col items-center w-1/3" key={header}>
               <div className="font-semibold opacity-0 mb-2">.</div>
-              {treatmentData[area].map((treatment) => (
+              {treatmentData[area]?.map((treatment: Treatment) => (
                 <div
                   className="text-center"
                   key={`${treatment.name}-${header}`}
@@ -101,44 +205,83 @@ const Home = () => {
   };
 
   // Function to add or remove selected treatment from the cart
-  const addItemToCart = (treatment: Treatment, area: string) => {
-    const selectedItem = {
-      gender,
-      area,
-      treatmentName: treatment.name,
-      price:
-        treatment.pricing["Einzelpreis pro Behandlung"] ||
-        treatment.pricing["Kurspreis"],
-      selectedTreatment: selectedTreatment,
-    };
+  // const addItemToCart = (treatment: Treatment, area: string) => {
+  //   const calculatePrice = (
+  //     treatment: Treatment,
+  //     itemCount: number
+  //   ): number => {
+  //     if (itemCount >= 5) {
+  //       return (
+  //         treatment.pricing["ab 5 Areale"] ||
+  //         treatment.pricing["Einzelpreis pro Behandlung"]
+  //       );
+  //     } else if (itemCount >= 3) {
+  //       return (
+  //         treatment.pricing["ab 3 Areale"] ||
+  //         treatment.pricing["Einzelpreis pro Behandlung"]
+  //       );
+  //     } else {
+  //       return treatment.pricing["Einzelpreis pro Behandlung"];
+  //     }
+  //   };
 
-    setSelectedItems((prevItems) => {
-      // Check if the item already exists in the selectedItems
-      const exists = prevItems.some(
-        (item) =>
-          item.gender === selectedItem.gender &&
-          item.area === selectedItem.area &&
-          item.treatmentName === selectedItem.treatmentName &&
-          item.selectedTreatment === selectedItem.selectedTreatment
-      );
+  //   setSelectedItems((prevItems) => {
+  //     const selectedItem = {
+  //       gender,
+  //       area,
+  //       treatmentName: treatment.name,
+  //       price: 0,
+  //       selectedTreatment,
+  //     };
 
-      if (exists) {
-        // If it exists, remove it from the cart
-        return prevItems.filter(
-          (item) =>
-            !(
-              item.gender === selectedItem.gender &&
-              item.area === selectedItem.area &&
-              item.treatmentName === selectedItem.treatmentName &&
-              item.selectedTreatment === selectedItem.selectedTreatment
-            )
-        );
-      } else {
-        // If it doesn't exist, add it to the cart
-        return [...prevItems, selectedItem];
-      }
-    });
-  };
+  //     // Check if the item already exists in the selectedItems
+  //     const exists = prevItems.some(
+  //       (item) =>
+  //         item.gender === selectedItem.gender &&
+  //         item.area === selectedItem.area &&
+  //         item.treatmentName === selectedItem.treatmentName &&
+  //         item.selectedTreatment === selectedItem.selectedTreatment
+  //     );
+
+  //     let updatedItems;
+  //     if (exists) {
+  //       // If it exists, remove it from the cart
+  //       return prevItems.filter(
+  //         (item) =>
+  //           !(
+  //             item.gender === selectedItem.gender &&
+  //             item.area === selectedItem.area &&
+  //             item.treatmentName === selectedItem.treatmentName &&
+  //             item.selectedTreatment === selectedItem.selectedTreatment
+  //           )
+  //       );
+  //     } else {
+  //       // Add the item
+  //       updatedItems = [...prevItems, selectedItem];
+  //     }
+
+  //     // Update the price for all items based on the new count
+  //     const updatedItemCount = updatedItems.length;
+
+  //     // updatedItems = updatedItems.map((item) => {
+  //     //   const treatmentList =
+  //     //     pricingData[item.gender]?.[item.selectedTreatment] || [];
+
+  //     //   const matchingTreatment = treatmentList.find(
+  //     //     (t: Treatment) => t.name === item.treatmentName
+  //     //   );
+
+  //     //   return {
+  //     //     ...item,
+  //     //     price: matchingTreatment
+  //     //       ? calculatePrice(matchingTreatment, updatedItemCount)
+  //     //       : 0, // Default to 0 if no matching treatment is found
+  //     //   };
+  //     // });
+
+  //     return updatedItems;
+  //   });
+  // };
 
   const calculateTotal = () => {
     const subtotal = selectedItems.reduce(
@@ -237,7 +380,7 @@ const Home = () => {
         <div className="mt-4">
           {selectedItems.map((item, index) => (
             <div key={index} className="flex justify-between items-center">
-              <p>{`${item.gender}-${item.selectedTreatment} - ${item.treatmentName} (${item.area}) `}</p>
+              <p>{`${item.gender}-${item.selectedTreatment} - ${item.treatment.name} (${item.area}) `}</p>
               <p>${item.price}</p>
             </div>
           ))}
@@ -293,6 +436,14 @@ const Home = () => {
                 handleSuccess(details);
               }}
             /> */}
+          </div>
+          <div className=" mt-4">
+            <Link
+              href="https://credit4beauty.de/"
+              className="px-4 py-2 rounded-md bg-blue-500 text-white font-semibold hover:bg-blue-600 transition-all"
+            >
+              credi4beauty
+            </Link>
           </div>
         </div>
       </div>
