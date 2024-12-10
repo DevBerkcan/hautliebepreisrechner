@@ -20,3 +20,13 @@ export type GenderPricingData = {
 };
 
 export type Gender = "Frau" | "Mann";
+
+export type SELECTED_TYPE = {
+  gender: Gender;
+  area: string;
+  treatment: Treatment;
+  price: number;
+  selectedTreatment: string;
+};
+
+export type PRICING_TYPE = "Area1" | "Area3" | "Area5";
