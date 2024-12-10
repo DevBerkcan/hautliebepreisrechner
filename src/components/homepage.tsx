@@ -194,7 +194,7 @@ const Home = () => {
                   key={`${treatment.name}-${header}`}
                 >
                   {treatment.pricing[header] ? (
-                    <p>${treatment.pricing[header]}</p>
+                    <p>€{treatment.pricing[header]}</p>
                   ) : (
                     <p>-</p> // Placeholder for missing pricing
                   )}
@@ -392,7 +392,7 @@ const Home = () => {
         <div className="mt-4">
           <div className="flex justify-between">
             <p>Subtotal:</p>
-            <p>${subtotal.toFixed(2)}</p>
+            <p>€{subtotal.toFixed(2)}</p>
           </div>
           <div className="flex justify-between">
             <p>Discount percentage:</p>
@@ -427,11 +427,11 @@ const Home = () => {
           </div>
           <div className="flex justify-between">
             <p>Tax:</p>
-            <p>${tax.toFixed(2)}</p>
+            <p>€{tax.toFixed(2)}</p>
           </div>
           <div className="flex justify-between font-bold">
             <p>Total:</p>
-            <p>${total.toFixed(2)}</p>
+            <p>€{total.toFixed(2)}</p>
             {/* <PayPalButton
               amount={total.toFixed(2)}
               onSuccess={(details) => {

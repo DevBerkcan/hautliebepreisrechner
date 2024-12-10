@@ -7,155 +7,155 @@ export const pricingData: GenderPricingData = {
         {
           name: "Gesicht",
           pricing: {
-            "ab 5 Areale": 39,
-            "ab 3 Areale": 49,
-            "Einzelpreis pro Behandlung": 59,
+            "ab 5 Areale": 53,
+            "ab 3 Areale": 60,
+            "Einzelpreis pro Behandlung": 71,
           },
         },
         {
           name: "Oberlippe",
           pricing: {
-            "ab 5 Areale": 19,
-            "ab 3 Areale": 24,
-            "Einzelpreis pro Behandlung": 29,
+            "ab 5 Areale": 26,
+            "ab 3 Areale": 30,
+            "Einzelpreis pro Behandlung": 35,
           },
         },
         {
           name: "Kinn",
           pricing: {
-            "ab 5 Areale": 19,
-            "ab 3 Areale": 24,
-            "Einzelpreis pro Behandlung": 29,
+            "ab 5 Areale": 26,
+            "ab 3 Areale": 30,
+            "Einzelpreis pro Behandlung": 35,
           },
         },
         {
           name: "Nacken",
           pricing: {
-            "ab 5 Areale": 29,
-            "ab 3 Areale": 39,
-            "Einzelpreis pro Behandlung": 49,
+            "ab 5 Areale": 44,
+            "ab 3 Areale": 50,
+            "Einzelpreis pro Behandlung": 59,
           },
         },
         {
           name: "Hals",
           pricing: {
-            "ab 5 Areale": 19,
-            "ab 3 Areale": 29,
-            "Einzelpreis pro Behandlung": 39,
+            "ab 5 Areale": 37,
+            "ab 3 Areale": 40,
+            "Einzelpreis pro Behandlung": 47,
           },
         },
         {
           name: "Koteletten",
           pricing: {
-            "ab 5 Areale": 19,
-            "ab 3 Areale": 24,
-            "Einzelpreis pro Behandlung": 29,
+            "ab 5 Areale": 26,
+            "ab 3 Areale": 30,
+            "Einzelpreis pro Behandlung": 35,
           },
         },
         {
           name: "Nasenlöcher",
           pricing: {
-            "ab 5 Areale": 15,
-            "ab 3 Areale": 20,
-            "Einzelpreis pro Behandlung": 25,
+            "ab 5 Areale": 22,
+            "ab 3 Areale": 26,
+            "Einzelpreis pro Behandlung": 30,
           },
         },
         {
           name: "Augenbrauen",
           pricing: {
-            "ab 5 Areale": 15,
-            "ab 3 Areale": 20,
-            "Einzelpreis pro Behandlung": 25,
+            "ab 5 Areale": 22,
+            "ab 3 Areale": 26,
+            "Einzelpreis pro Behandlung": 30,
           },
         },
       ],
-      Oberkorper: [
+      Oberkörper: [
         {
           name: "Oberarme",
           pricing: {
-            "ab 5 Areale": 49,
-            "ab 3 Areale": 59,
-            "Einzelpreis pro Behandlung": 69,
+            "ab 5 Areale": 62,
+            "ab 3 Areale": 71,
+            "Einzelpreis pro Behandlung": 83,
           },
         },
         {
           name: "Unterarme",
           pricing: {
-            "ab 5 Areale": 59,
-            "ab 3 Areale": 69,
-            "Einzelpreis pro Behandlung": 79,
+            "ab 5 Areale": 71,
+            "ab 3 Areale": 81,
+            "Einzelpreis pro Behandlung": 95,
           },
         },
         {
           name: "Hände",
           pricing: {
-            "ab 5 Areale": 15,
-            "ab 3 Areale": 19,
-            "Einzelpreis pro Behandlung": 29,
+            "ab 5 Areale": 26,
+            "ab 3 Areale": 30,
+            "Einzelpreis pro Behandlung": 35,
           },
         },
         {
           name: "Rücken",
           pricing: {
-            "ab 5 Areale": 89,
-            "ab 3 Areale": 99,
-            "Einzelpreis pro Behandlung": 109,
+            "ab 5 Areale": 98,
+            "ab 3 Areale": 111,
+            "Einzelpreis pro Behandlung": 131,
           },
         },
         {
           name: "Steißbein",
           pricing: {
-            "ab 5 Areale": 29,
-            "ab 3 Areale": 39,
-            "Einzelpreis pro Behandlung": 49,
+            "ab 5 Areale": 44,
+            "ab 3 Areale": 50,
+            "Einzelpreis pro Behandlung": 59,
           },
         },
         {
           name: "Dekolleté",
           pricing: {
-            "ab 5 Areale": 29,
-            "ab 3 Areale": 39,
-            "Einzelpreis pro Behandlung": 49,
+            "ab 5 Areale": 44,
+            "ab 3 Areale": 50,
+            "Einzelpreis pro Behandlung": 59,
           },
         },
         {
           name: "Brust",
           pricing: {
-            "ab 5 Areale": 29,
-            "ab 3 Areale": 39,
-            "Einzelpreis pro Behandlung": 49,
+            "ab 5 Areale": 44,
+            "ab 3 Areale": 50,
+            "Einzelpreis pro Behandlung": 59,
           },
         },
         {
           name: "Brustwarzen",
           pricing: {
-            "ab 5 Areale": 19,
-            "ab 3 Areale": 24,
-            "Einzelpreis pro Behandlung": 29,
+            "ab 5 Areale": 26,
+            "ab 3 Areale": 30,
+            "Einzelpreis pro Behandlung": 35,
           },
         },
         {
           name: "Bauch komplett",
           pricing: {
-            "ab 5 Areale": 69,
-            "ab 3 Areale": 79,
-            "Einzelpreis pro Behandlung": 89,
+            "ab 5 Areale": 80,
+            "ab 3 Areale": 91,
+            "Einzelpreis pro Behandlung": 107,
           },
         },
         {
           name: "Bauchlinie",
           pricing: {
-            "ab 5 Areale": 29,
-            "ab 3 Areale": 39,
-            "Einzelpreis pro Behandlung": 49,
+            "ab 5 Areale": 44,
+            "ab 3 Areale": 50,
+            "Einzelpreis pro Behandlung": 59,
           },
         },
         {
           name: "Achseln",
           pricing: {
-            "ab 5 Areale": 39,
-            "ab 3 Areale": 49,
-            "Einzelpreis pro Behandlung": 59,
+            "ab 5 Areale": 53,
+            "ab 3 Areale": 60,
+            "Einzelpreis pro Behandlung": 71,
           },
         },
       ],
@@ -163,59 +163,57 @@ export const pricingData: GenderPricingData = {
         {
           name: "Unterschenkel",
           pricing: {
-            "ab 5 Areale": 95,
-            "ab 3 Areale": 109,
-            "Einzelpreis pro Behandlung": 119,
+            "ab 5 Areale": 107,
+            "ab 3 Areale": 127,
+            "Einzelpreis pro Behandlung": 143,
           },
         },
         {
           name: "Oberschenkel",
           pricing: {
-            "ab 5 Areale": 105,
-            "ab 3 Areale": 119,
-            "Einzelpreis pro Behandlung": 139,
+            "ab 5 Areale": 125,
+            "ab 3 Areale": 145,
+            "Einzelpreis pro Behandlung": 167,
           },
         },
         {
           name: "Füße",
           pricing: {
-            "ab 5 Areale": 15,
-            "ab 3 Areale": 19,
-            "Einzelpreis pro Behandlung": 29,
+            "ab 5 Areale": 26,
+            "ab 3 Areale": 30,
+            "Einzelpreis pro Behandlung": 35,
           },
         },
-      ],
-      Intimzone: [
         {
           name: "Gesäß Komplett",
           pricing: {
-            "ab 5 Areale": 69,
-            "ab 3 Areale": 79,
-            "Einzelpreis pro Behandlung": 99,
+            "ab 5 Areale": 89,
+            "ab 3 Areale": 101,
+            "Einzelpreis pro Behandlung": 119,
           },
         },
         {
-          name: "Pofalte",
+          name: "Po-Falte",
           pricing: {
-            "ab 5 Areale": 29,
-            "ab 3 Areale": 39,
-            "Einzelpreis pro Behandlung": 49,
+            "ab 5 Areale": 44,
+            "ab 3 Areale": 50,
+            "Einzelpreis pro Behandlung": 59,
           },
         },
         {
           name: "Bikini-Zone",
           pricing: {
-            "ab 5 Areale": 29,
-            "ab 3 Areale": 39,
-            "Einzelpreis pro Behandlung": 49,
+            "ab 5 Areale": 44,
+            "ab 3 Areale": 50,
+            "Einzelpreis pro Behandlung": 59,
           },
         },
         {
           name: "Intimbereich (Bikini, Intim, Po-Falte)",
           pricing: {
-            "ab 5 Areale": 99,
-            "ab 3 Areale": 109,
-            "Einzelpreis pro Behandlung": 119,
+            "ab 5 Areale": 107,
+            "ab 3 Areale": 127,
+            "Einzelpreis pro Behandlung": 143,
           },
         },
       ],
@@ -579,19 +577,19 @@ export const pricingData: GenderPricingData = {
         {
           name: "Dekolleté",
           pricing: {
-            "Einzelpreis pro Behandlung": 60,
+            "Einzelpreis pro Behandlung": 75,
           },
         },
         {
           name: "Gesicht",
           pricing: {
-            "Einzelpreis pro Behandlung": 120,
+            "Einzelpreis pro Behandlung": 156,
           },
         },
         {
           name: "Hals",
           pricing: {
-            "Einzelpreis pro Behandlung": 30,
+            "Einzelpreis pro Behandlung": 38,
           },
         },
       ],
@@ -599,19 +597,19 @@ export const pricingData: GenderPricingData = {
         {
           name: "Dekolleté",
           pricing: {
-            "Einzelpreis pro Behandlung": 200,
+            "Einzelpreis pro Behandlung": 249,
           },
         },
         {
           name: "Gesicht",
           pricing: {
-            "Einzelpreis pro Behandlung": 450,
+            "Einzelpreis pro Behandlung": 562,
           },
         },
         {
           name: "Hals",
           pricing: {
-            "Einzelpreis pro Behandlung": 100,
+            "Einzelpreis pro Behandlung": 125,
           },
         },
       ],
@@ -619,19 +617,19 @@ export const pricingData: GenderPricingData = {
         {
           name: "Dekolleté",
           pricing: {
-            "Einzelpreis pro Behandlung": 380,
+            "Einzelpreis pro Behandlung": 475,
           },
         },
         {
           name: "Gesicht",
           pricing: {
-            "Einzelpreis pro Behandlung": 800,
+            "Einzelpreis pro Behandlung": 999,
           },
         },
         {
           name: "Hals",
           pricing: {
-            "Einzelpreis pro Behandlung": 180,
+            "Einzelpreis pro Behandlung": 225,
           },
         },
       ],
