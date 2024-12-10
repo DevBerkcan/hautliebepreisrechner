@@ -48,7 +48,10 @@ const Home = () => {
 
   // Render Pricing Rows
 
-  const updatePricing = (selectedItems: any[], selectedPricingType: string) => {
+  const updatePricing = (
+    selectedItems: SELECTED_TYPE[],
+    selectedPricingType: string
+  ) => {
     return selectedItems.map((item) => {
       const pricingValueString =
         selectedPricingType === "Area5"
