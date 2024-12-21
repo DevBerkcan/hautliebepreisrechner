@@ -1,11 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import Navbar from "./Navbar";
-import poppins from "@/app/fonts/fonts";
-// import { useRouter } from "next/navigation";
-// import PayPalButton from "./PayPalButton";
 import {
-  Category,
   Gender,
   PRICING_TYPE,
   SELECTED_TYPE,
@@ -23,22 +19,6 @@ const Home = () => {
     useState<PRICING_TYPE>("Area1");
   const [discountPercent, setDiscountPercent] = useState<number>(0);
   const [selectedItems, setSelectedItems] = useState<SELECTED_TYPE[]>([]);
-
-  // const router = useRouter();
-
-  const getPricingHeaders = (treatmentData: Category): string[] => {
-    const headers = new Set<string>();
-
-    Object.keys(treatmentData).forEach((area) => {
-      treatmentData[area].forEach((treatment) => {
-        Object.keys(treatment.pricing).forEach((header) => {
-          headers.add(header);
-        });
-      });
-    });
-
-    return Array.from(headers);
-  };
 
   const updatePricing = (
     selectedItems: SELECTED_TYPE[],
