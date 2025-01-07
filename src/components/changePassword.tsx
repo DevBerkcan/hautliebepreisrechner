@@ -13,7 +13,7 @@ const ChangePassword = () => {
   return (
     <Dialog>
       <DialogTrigger>
-        <div className="flex items-center gap-2 px-4 py-2 rounded-md border border-solid border-main-color text-sm text-main-color hover:bg-gray-100">
+        <div className="flex items-center gap-2 px-4 py-1 rounded-md border border-solid border-main-color text-sm text-main-color hover:bg-gray-100">
           <Image
             src="/assets/pencil-line.png"
             alt="edit icon"

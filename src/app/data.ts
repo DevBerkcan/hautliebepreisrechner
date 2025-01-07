@@ -369,7 +369,7 @@ export const pricingData: GenderPricingData = {
       ],
       Sonstige: [
         {
-          name: "Fibrom",
+          name: "Fibroma/Milia(per piece)",
           pricing: {
             "ab 5 Areale": 10,
             "ab 3 Areale": 10,
@@ -982,6 +982,46 @@ export const pricingData: GenderPricingData = {
         },
       ],
     },
+    Augen: {
+      "Wimpern Lifting": [
+        {
+          name: "Wimpernlifting",
+          pricing: {
+            "Einzelpreis pro Behandlung": 45,
+          },
+        },
+        {
+          name: "Wimpernfärben",
+          pricing: {
+            "Einzelpreis pro Behandlung": 15,
+          },
+        },
+      ],
+      Augenbrauen: [
+        {
+          name: "Augenbrauenlifting",
+          pricing: {
+            "Einzelpreis pro Behandlung": 45,
+          },
+        },
+        {
+          name: "Augenbrauenzupfen",
+          pricing: {
+            "Einzelpreis pro Behandlung": 45,
+          },
+        },
+      ],
+    },
+    Andere: {
+      andere: [
+        {
+          name: "Manuelle Reinigung",
+          pricing: {
+            "Einzelpreis pro Behandlung": 50,
+          },
+        },
+      ],
+    },
   },
   Mann: {
     Haarentfernung: {
@@ -1353,7 +1393,7 @@ export const pricingData: GenderPricingData = {
       ],
       Sonstige: [
         {
-          name: "Fibrom",
+          name: "Fibroma/Milia(per piece)",
           pricing: {
             "ab 5 Areale": 10,
             "ab 3 Areale": 10,
@@ -1962,6 +2002,16 @@ export const pricingData: GenderPricingData = {
           name: "EMS for radio frequency",
           pricing: {
             Kurspreis: 990,
+          },
+        },
+      ],
+    },
+    Andere: {
+      andere: [
+        {
+          name: "Manuelle Reinigung",
+          pricing: {
+            "Einzelpreis pro Behandlung": 50,
           },
         },
       ],
