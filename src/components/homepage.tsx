@@ -43,8 +43,6 @@ const Home = () => {
   };
 
   const addItemToCart = (treatment: Treatment, area: string) => {
-    const selectedItemLength = selectedItems.length;
-
     const existingItem = selectedItems.find((item) => item.id === treatment.id);
 
     if (existingItem) {
@@ -78,8 +76,6 @@ const Home = () => {
       treatment.pricing[pricingKey] ||
       treatment.pricing["Einzelpreis pro Behandlung"] ||
       treatment.pricing["Kurspreis"];
-
-    console.log(price);
 
     const newItem = {
       id: treatment.id,
