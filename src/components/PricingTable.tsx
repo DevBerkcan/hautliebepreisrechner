@@ -79,18 +79,16 @@ const PricingTable = ({
                         </td>
                         <td className="border px-4 py-3">{treatment.name}</td>
                         <td className="border px-4 py-3 text-center">
-                          {treatment.pricing["ab 5 Areale"] || "-"}
-                          {treatment.pricing["ab 5 Areale"] && "€"}
+                          {treatment.pricing["ab 5 Areale"] ?? 0}€
+                          {/* {treatment.pricing["ab 5 Areale"] && "€"} */}
                         </td>
                         <td className="border px-4 py-3 text-center">
-                          {treatment.pricing["ab 3 Areale"] || "-"}
-                          {treatment.pricing["ab 3 Areale"] && "€"}
+                          {treatment.pricing["ab 3 Areale"] ?? "0"}€
+                          {/* {treatment.pricing["ab 3 Areale"] && "€"} */}
                         </td>
                         <td className="border px-4 py-3 text-center">
-                          {treatment.pricing["Einzelpreis pro Behandlung"] ||
-                            "-"}
-                          {treatment.pricing["Einzelpreis pro Behandlung"] &&
-                            "€"}
+                          {treatment.pricing["Einzelpreis pro Behandlung"] ?? 0}
+                          €
                         </td>
                       </tr>
                     )

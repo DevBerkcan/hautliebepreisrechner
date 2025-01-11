@@ -3,6 +3,7 @@ export type Pricing = {
 };
 
 export type Treatment = {
+  id: number;
   name: string;
   pricing: Pricing;
 };
@@ -22,6 +23,7 @@ export type GenderPricingData = {
 export type Gender = "Frau" | "Mann";
 
 export type SELECTED_TYPE = {
+  id: number;
   gender: Gender;
   area: string;
   treatment: Treatment;

@@ -45,84 +45,70 @@ const Home = () => {
   const addItemToCart = (treatment: Treatment, area: string) => {
     const selectedItemLength = selectedItems.length;
 
-    // Check if the item already exists
-    const exists = selectedItems.find((item) => {
-      return (
-        item.area === area &&
-        item.selectedTreatment === selectedTreatment &&
-        item.treatment.name === treatment.name &&
-        (selectedTreatment !== "courses" ? item.gender === gender : true)
+    const existingItem = selectedItems.find((item) => item.id === treatment.id);
+
+    if (existingItem) {
+      let updatedItems = selectedItems.filter(
+        (item) => item.id !== existingItem.id
       );
-    });
 
-    // If the item exists, remove it
-    if (exists) {
-      setSelectedItems((prev) => {
-        const updatedItems = prev.filter(
-          (item) =>
-            !(
-              item.area === exists.area &&
-              item.gender === exists.gender &&
-              item.selectedTreatment === exists.selectedTreatment &&
-              item.treatment.name === exists.treatment.name
-            )
-        );
+      const newPricingType =
+        updatedItems.length >= 5
+          ? "Area5"
+          : updatedItems.length >= 3
+          ? "Area3"
+          : "Area1";
 
-        const newCondition =
-          updatedItems.length >= 5
-            ? "Area5"
-            : updatedItems.length >= 3
-            ? "Area3"
-            : "Area1";
+      if (newPricingType !== selectedPricingType) {
+        updatedItems = updatePricing(updatedItems, newPricingType);
+        setSelectedPricingType(newPricingType as PRICING_TYPE);
+      }
 
-        if (newCondition !== selectedPricingType) {
-          const updatedItemsWithPricing = updatePricing(
-            updatedItems,
-            newCondition
-          );
-          return updatedItemsWithPricing;
-        }
-        return updatedItems;
-      });
+      setSelectedItems(updatedItems);
       return;
     }
 
-    // Define new item to be added
+    const pricingKey =
+      selectedPricingType === "Area5"
+        ? "ab 5 Areale"
+        : selectedPricingType === "Area3"
+        ? "ab 3 Areale"
+        : "Einzelpreis pro Behandlung";
+    const price =
+      treatment.pricing[pricingKey] ||
+      treatment.pricing["Einzelpreis pro Behandlung"] ||
+      treatment.pricing["Kurspreis"];
+
+    console.log(price);
+
     const newItem = {
+      id: treatment.id,
       gender,
       area,
       treatment,
       selectedTreatment,
-      price:
-        treatment.pricing[
-          selectedPricingType === "Area5"
-            ? "ab 5 Areale"
-            : selectedPricingType === "Area3"
-            ? "ab 3 Areale"
-            : "Einzelpreis pro Behandlung"
-        ] || treatment.pricing["Kurspreis"],
+      price,
     };
+    const updatedItems = [...selectedItems, newItem];
 
-    // Add new item based on current selected item count
-    let newPricingType: string;
-    if (selectedItemLength + 1 >= 5) {
-      newPricingType = "Area5";
-    } else if (selectedItemLength + 1 >= 3) {
-      newPricingType = "Area3";
-    } else {
-      newPricingType = "Area1";
-    }
+    // Determine the new pricing type after adding the item
+    const newPricingType =
+      updatedItems.length >= 5
+        ? "Area5"
+        : updatedItems.length >= 3
+        ? "Area3"
+        : "Area1";
 
-    setSelectedItems((prev) => {
-      const updatedItems = [...prev, newItem];
-      setSelectedPricingType(newPricingType as PRICING_TYPE);
-
+    if (newPricingType !== selectedPricingType) {
       const updatedItemsWithPricing = updatePricing(
         updatedItems,
         newPricingType
       );
-      return updatedItemsWithPricing;
-    });
+      setSelectedPricingType(newPricingType as PRICING_TYPE);
+      setSelectedItems(updatedItemsWithPricing);
+    } else {
+      setSelectedItems(updatedItems);
+    }
   };
 
   const calculateTotal = () => {
