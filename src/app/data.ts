@@ -1134,6 +1134,13 @@ export const pricingData: GenderPricingData = {
             "Einzelpreis pro Behandlung": 15,
           },
         },
+        {
+          id: 279,
+          name: "Wimpernlifting + Färben",
+          pricing: {
+            "Einzelpreis pro Behandlung": 60,
+          },
+        },
       ],
       Augenbrauen: [
         {
@@ -1145,9 +1152,9 @@ export const pricingData: GenderPricingData = {
         },
         {
           id: 140,
-          name: "Augenbrauenzupfen",
+          name: "Augenbrauen zupfen",
           pricing: {
-            "Einzelpreis pro Behandlung": 45,
+            "Einzelpreis pro Behandlung": 12,
           },
         },
       ],
@@ -1579,7 +1586,7 @@ export const pricingData: GenderPricingData = {
       Sonstige: [
         {
           id: 186,
-          name: "Fibroma/Milia(per piece)",
+          name: "Fibroma/Milia(pro Stück)",
           pricing: {
             "ab 5 Areale": 10,
             "ab 3 Areale": 10,
