@@ -139,57 +139,59 @@ const Home = () => {
   const { subtotal, total } = calculateTotal();
 
   return (
-    <div className="w-full bg-gray-50 text-white overflow-hidden">
-      <Navbar />
-      <div className="flex justify-between flex-wrap gap-2 px-5 mb-4">
-        <div className=" flex gap-4 ">
-          {["Frau", "Mann"].map((g) => (
+    <div className="w-full bg-gray-50 text-white overflow-hidden relative">
+      <div className="h-[calc(100vh-280px)] md:h-[calc(100vh-250px)] overflow-auto">
+        <Navbar />
+        <div className="flex justify-between flex-wrap gap-2 px-5 mb-4">
+          <div className=" flex gap-4 ">
+            {["Frau", "Mann"].map((g) => (
+              <button
+                key={g}
+                onClick={() => setGender(g as Gender)}
+                className={`px-6 py-2 rounded-md font-medium ${
+                  gender === g
+                    ? "bg-[#007A89] text-white"
+                    : "bg-gray-200 text-[#007A89]"
+                } hover:shadow-md`}
+              >
+                {g}
+              </button>
+            ))}
+          </div>
+          <button
+            className="flex items-center gap-2 px-4 py-2 rounded-md border border-solid bg-red-600 text-sm text-white hover:bg-red-500"
+            onClick={() => {
+              setSelectedItems([]);
+              setDiscountPercent(0);
+            }}
+          >
+            Zurücksetzen
+          </button>
+        </div>
+        {/* <div className="flex  "> */}
+        <div className="flex flex-row  px-5 align-middle items-center gap-4 mb-6 flex-wrap">
+          {Object.keys(pricingData[gender]).map((treatmentType) => (
             <button
-              key={g}
-              onClick={() => setGender(g as Gender)}
-              className={`px-6 py-2 rounded-md font-medium ${
-                gender === g
-                  ? "bg-[#007A89] text-white"
-                  : "bg-gray-200 text-[#007A89]"
-              } hover:shadow-md`}
+              key={treatmentType}
+              onClick={() => setSelectedTreatment(treatmentType)}
+              className={`px-4 py-2 border border-solid border-gray-300 bg-blue-500 shadow-md hover:shadow-lg transition-shadow ${
+                selectedTreatment === treatmentType
+                  ? "bg-secondary-color text-white"
+                  : "bg-gray-50 text-secondary-color"
+              } rounded-md`}
             >
-              {g}
+              {treatmentType}
             </button>
           ))}
         </div>
-        <button
-          className="flex items-center gap-2 px-4 py-2 rounded-md border border-solid bg-red-600 text-sm text-white hover:bg-red-500"
-          onClick={() => {
-            setSelectedItems([]);
-            setDiscountPercent(0);
-          }}
-        >
-          Zurücksetzen
-        </button>
-      </div>
-      {/* <div className="flex  "> */}
-      <div className="flex flex-row  px-5 align-middle items-center gap-4 mb-6 flex-wrap">
-        {Object.keys(pricingData[gender]).map((treatmentType) => (
-          <button
-            key={treatmentType}
-            onClick={() => setSelectedTreatment(treatmentType)}
-            className={`px-4 py-2 border border-solid border-gray-300 bg-blue-500 shadow-md hover:shadow-lg transition-shadow ${
-              selectedTreatment === treatmentType
-                ? "bg-main-color text-white"
-                : "bg-gray-50 text-main-color"
-            } rounded-md`}
-          >
-            {treatmentType}
-          </button>
-        ))}
-      </div>
 
-      <PricingTable
-        selectedGender={gender}
-        selectedTreatment={selectedTreatment}
-        selectedItems={selectedItems}
-        addItemToCart={addItemToCart}
-      />
+        <PricingTable
+          selectedGender={gender}
+          selectedTreatment={selectedTreatment}
+          selectedItems={selectedItems}
+          addItemToCart={addItemToCart}
+        />
+      </div>
       {/* Payment Section */}
       <Footer
         selectedItems={selectedItems}

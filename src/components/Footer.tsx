@@ -31,20 +31,21 @@ const Footer = ({
   );
   const threeItemsPricingValue = calculateTotalPrice("ab 3 Areale");
 
+  const discountOnSelectingMore = singleItemsPricingValue
+    ? (100 * (singleItemsPricingValue - subtotal)) / singleItemsPricingValue
+    : 0;
   return (
-    <div className="mt-6 px-2 md:p-4 border-t-2 bg-[#E0D7C5] text-slate-600">
-      <h3 className="font-semibold text-lg">Ihre Bestellübersicht</h3>
-
-      <div className="mt-4 space-y-4">
-        {selectedItems.map((item, index) => (
+    <div className="fixed bottom-0 left-0 right-0 mt-6 border-t-2  text-main-color mb-2 border-t-main-color px-4 pt-2">
+      <div className="space-y-2">
+        {/* {selectedItems.map((item, index) => (
           <div key={index} className="flex justify-between items-center">
             <p>{`${item.gender} - ${item.selectedTreatment} - ${item.treatment.name} (${item.area})`}</p>
             <p>{`${item.price?.toFixed(2) || "0.00"}€`}</p>
           </div>
-        ))}
+        ))} */}
 
         {/* Einsparungen Abschnitt */}
-        {selectedItems.length >= 3 && (
+        {/* {selectedItems.length >= 3 && (
           <div>
             <h1 className="font-semibold">EINSPARUNGEN</h1>
 
@@ -76,13 +77,18 @@ const Footer = ({
               </div>
             )}
           </div>
-        )}
+        )} */}
         {/* Zwischensumme und Rabatt */}
         <div className="flex justify-between">
-          <p>Zwischensumme:</p>
-          <p>{subtotal.toFixed(2)}€</p>
+          <p>Summe der Einzelpreise:</p>
+          <p>{singleItemsPricingValue.toFixed(2)}€</p>
         </div>
-
+        <div className="flex justify-between">
+          <p>{`Ihr Hautliebe-Paket-Preis(pro Behandlung)`}</p>
+          <p>
+            {subtotal.toFixed(2)}€ {`(${discountOnSelectingMore.toFixed(2)}%)`}
+          </p>
+        </div>
         <div className="flex justify-between">
           <p>Rabattprozentsatz:</p>
           <div>
@@ -111,7 +117,7 @@ const Footer = ({
         {/* Gesamtpreis nach Rabatt */}
         <div className="flex justify-between font-bold">
           <p>Gesamt:</p>
-          <p>{(total - total * (discountPercent / 100)).toFixed(2)}€</p>
+          <p>{total.toFixed(2)}€</p>
         </div>
 
         {/* Link zur externen Website */}

@@ -1,6 +1,7 @@
 import React from "react";
 import { Gender, SELECTED_TYPE, Treatment } from "@/app/types/types";
 import { pricingData as data } from "@/app/data";
+import { Sparkles } from "lucide-react";
 
 const PricingTable = ({
   selectedItems,
@@ -27,17 +28,33 @@ const PricingTable = ({
   return (
     <div className="p-6 bg-white rounded-lg shadow-xl">
       <div className="overflow-x-auto">
-        {" "}
         {/* Allow horizontal scrolling */}
         <table className="w-full border-collapse border border-gray-300 text-gray-800">
-          <thead className="bg-gray-100 sticky top-0 z-10">
-            <tr>
-              <th className="border px-4 py-3 text-center"></th>
-              <th className="border px-4 py-3 text-left">Treatment Name</th>
-              <th className="border px-4 py-3 text-center">ab 5 Areale</th>
-              <th className="border px-4 py-3 text-center">Ab 3 Areale</th>
-              <th className="border px-4 py-3 text-center">
-                Einzelpreis pro Behandlung
+          <thead>
+            <tr className="[&>th]:relative [&>th]:overflow-hidden">
+              <th className="py-2 px-2 bg-white/40">
+                <div className="relative z-10 flex items-center justify-center"></div>
+                <div className="absolute inset-0 bg-gradient-to-r from-violet-100/20 to-transparent" />
+              </th>
+              <th className="py-2 px-2 bg-white/40">
+                <div className="text-2xl bg-green-600 rounded-t-full pt-5 pb-1 text-white">
+                  Treatment Name
+                </div>
+              </th>
+              <th className="py-2 px-2 bg-white/40">
+                <div className="text-2xl bg-green-600 rounded-t-full pt-5 pb-1 text-white">
+                  ab 5 Areale
+                </div>
+              </th>
+              <th className="py-2 px-2 bg-white/40">
+                <div className="text-2xl bg-green-600 rounded-t-full pt-5 pb-1 text-white">
+                  Ab 3 Areale
+                </div>
+              </th>
+              <th className="py-2 px-2 bg-white/40">
+                <div className="text-2xl bg-green-600 rounded-t-full pt-5 pb-1 text-white">
+                  Einzelpreis pro Behandlung
+                </div>
               </th>
             </tr>
           </thead>
@@ -88,6 +105,7 @@ const PricingTable = ({
                         </td>
                         <td className="border px-4 py-3 text-center">
                           {treatment.pricing["Einzelpreis pro Behandlung"] ||
+                            treatment.pricing["Kurspreis"] ||
                             "-"}
                           {treatment.pricing["Einzelpreis pro Behandlung"] &&
                             "€"}
