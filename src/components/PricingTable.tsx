@@ -1,7 +1,6 @@
 import React from "react";
 import { Gender, SELECTED_TYPE, Treatment } from "@/app/types/types";
 import { pricingData as data } from "@/app/data";
-import { Sparkles } from "lucide-react";
 
 const PricingTable = ({
   selectedItems,
@@ -37,23 +36,23 @@ const PricingTable = ({
                 <div className="absolute inset-0 bg-gradient-to-r from-violet-100/20 to-transparent" />
               </th>
               <th className="py-2 px-2 bg-white/40">
-                <div className="text-2xl bg-green-600 rounded-t-full pt-5 pb-1 text-white">
+                <div className="text-2xl bg-main-color rounded-t-full pt-5 pb-1 text-white">
                   Treatment Name
                 </div>
               </th>
               <th className="py-2 px-2 bg-white/40">
-                <div className="text-2xl bg-green-600 rounded-t-full pt-5 pb-1 text-white">
+                <div className="text-2xl bg-main-color rounded-t-full pt-5 pb-1 text-white">
                   ab 5 Areale
                 </div>
               </th>
               <th className="py-2 px-2 bg-white/40">
-                <div className="text-2xl bg-green-600 rounded-t-full pt-5 pb-1 text-white">
+                <div className="text-2xl bg-main-color rounded-t-full pt-5 pb-1 text-white">
                   Ab 3 Areale
                 </div>
               </th>
               <th className="py-2 px-2 bg-white/40">
-                <div className="text-2xl bg-green-600 rounded-t-full pt-5 pb-1 text-white">
-                  Einzelpreis pro Behandlung
+                <div className="text-2xl bg-main-color rounded-t-full pt-5 pb-1 text-white">
+                  Einzelpreis pro Behandlungen
                 </div>
               </th>
             </tr>
@@ -96,17 +95,17 @@ const PricingTable = ({
                         </td>
                         <td className="border px-4 py-3">{treatment.name}</td>
                         <td className="border px-4 py-3 text-center">
-                          {treatment.pricing["ab 5 Areale"] || "-"}
-                          {treatment.pricing["ab 5 Areale"] && "€"}
+                          {treatment.pricing["ab 5 Areale"] ?? 0}€
+                          {/* {treatment.pricing["ab 5 Areale"] && "€"} */}
                         </td>
                         <td className="border px-4 py-3 text-center">
-                          {treatment.pricing["ab 3 Areale"] || "-"}
-                          {treatment.pricing["ab 3 Areale"] && "€"}
+                          {treatment.pricing["ab 3 Areale"] ?? "0"}€
+                          {/* {treatment.pricing["ab 3 Areale"] && "€"} */}
                         </td>
                         <td className="border px-4 py-3 text-center">
-                          {treatment.pricing["Einzelpreis pro Behandlung"] ||
-                            treatment.pricing["Kurspreis"] ||
-                            "-"}
+                          {(treatment.pricing["Einzelpreis pro Behandlung"] ||
+                            treatment.pricing["Kurspreis"]) ??
+                            0}
                           {treatment.pricing["Einzelpreis pro Behandlung"] &&
                             "€"}
                         </td>

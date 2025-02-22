@@ -29,7 +29,7 @@ const Footer = ({
   const singleItemsPricingValue = calculateTotalPrice(
     "Einzelpreis pro Behandlung"
   );
-  const threeItemsPricingValue = calculateTotalPrice("ab 3 Areale");
+  // const threeItemsPricingValue = calculateTotalPrice("ab 3 Areale");
 
   const discountOnSelectingMore = singleItemsPricingValue
     ? (100 * (singleItemsPricingValue - subtotal)) / singleItemsPricingValue
