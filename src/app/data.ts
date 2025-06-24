@@ -1271,8 +1271,8 @@ export const pricingData: GenderPricingData = {
           name: "Oberarme",
           pricing: {
             "ab 5 Areale": 99,
-            "ab 3 Areale": 119,
-            "Einzelpreis pro Behandlung": 101,
+            "ab 3 Areale": 101,
+            "Einzelpreis pro Behandlung": 119,
           },
         },
         {
@@ -1280,8 +1280,8 @@ export const pricingData: GenderPricingData = {
           name: "Unterarme",
           pricing: {
             "ab 5 Areale": 99,
-            "ab 3 Areale": 119,
-            "Einzelpreis pro Behandlung": 101,
+            "ab 3 Areale": 101,
+            "Einzelpreis pro Behandlung": 119,
           },
         },
         {
